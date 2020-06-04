@@ -1,6 +1,5 @@
 import React, { useContext } from "react";
 import { makeStyles } from "@material-ui/core/styles";
-
 import {
 	BrowserRouter as Router,
 	Route,
@@ -10,6 +9,10 @@ import {
 import LoginPage from "./components/pages/LoginPage";
 import SignupPage from "./components/pages/SignupPage";
 import DashboardPage from "./components/pages/DashboardPage";
+import AccountPage from "./components/pages/AccountPage";
+import WatchlistPage from "./components/pages/WatchlistPage";
+import NotificationPage from "./components/pages/NotificationPage";
+
 import PrivateRoute from "./components/PrivateRoute";
 import { FirebaseContext } from "./auth/FirebaseAuthProvider";
 
@@ -39,6 +42,13 @@ const App = (props) => {
 						component={authenticated ? () => <Redirect to='/' /> : SignupPage}
 					/>
 					<PrivateRoute path='/' exact component={DashboardPage} />
+					<PrivateRoute
+						path='/notifications'
+						exact
+						component={NotificationPage}
+					/>
+					<PrivateRoute path='/settings' exact component={AccountPage} />
+					<PrivateRoute path='/watchlist' exact component={WatchlistPage} />
 				</Switch>
 			</Router>
 		</div>

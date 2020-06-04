@@ -1,11 +1,8 @@
 import React, { useState } from "react";
+import { Link } from "react-router-dom";
 import clsx from "clsx";
 import { makeStyles, ThemeProvider } from "@material-ui/core/styles";
-import CssBaseline from "@material-ui/core/CssBaseline";
 import Drawer from "@material-ui/core/Drawer";
-import Box from "@material-ui/core/Box";
-import AppBar from "@material-ui/core/AppBar";
-import Toolbar from "@material-ui/core/Toolbar";
 import List from "@material-ui/core/List";
 import Divider from "@material-ui/core/Divider";
 import IconButton from "@material-ui/core/IconButton";
@@ -18,6 +15,8 @@ import DashboardIcon from "@material-ui/icons/Dashboard";
 import TrackChangesIcon from "@material-ui/icons/TrackChanges";
 import AccountCircleIcon from "@material-ui/icons/AccountCircle";
 import ExitToAppIcon from "@material-ui/icons/ExitToApp";
+import Container from "@material-ui/core/Container";
+import firebase from "../auth/firebase";
 import theme from "./theme";
 
 const drawerWidth = 250;
@@ -89,7 +88,6 @@ const useStyles = makeStyles((theme) => ({
 	},
 	container: {
 		marginLeft: theme.spacing(9),
-
 		[theme.breakpoints.up("sm")]: {
 			transition: theme.transitions.create(["width", "margin"], {
 				easing: theme.transitions.easing.sharp,
@@ -106,6 +104,9 @@ const useStyles = makeStyles((theme) => ({
 				duration: theme.transitions.duration.enteringScreen,
 			}),
 		},
+	},
+	bottomList: {
+		marginTop: "auto",
 	},
 }));
 
@@ -135,19 +136,19 @@ const NavigationDrawer = ({ children }) => {
 				</div>
 				<Divider />
 				<List>
-					<ListItem button>
+					<ListItem button component={Link} to='/'>
 						<ListItemIcon>
 							<DashboardIcon />
 						</ListItemIcon>
 						<ListItemText primary='Dashboard' />
 					</ListItem>
-					<ListItem button>
+					<ListItem button component={Link} to='/watchlist'>
 						<ListItemIcon>
 							<TrackChangesIcon />
 						</ListItemIcon>
 						<ListItemText primary='Watchlist' />
 					</ListItem>
-					<ListItem button>
+					<ListItem button component={Link} to='/notifications'>
 						<ListItemIcon>
 							<NotificationsIcon />
 						</ListItemIcon>
@@ -155,14 +156,14 @@ const NavigationDrawer = ({ children }) => {
 					</ListItem>
 				</List>
 				<Divider />
-				<List>
-					<ListItem button>
+				<List className={classes.bottomList}>
+					<ListItem button component={Link} to='/settings'>
 						<ListItemIcon>
 							<AccountCircleIcon />
 						</ListItemIcon>
 						<ListItemText primary='Account Settings' />
 					</ListItem>
-					<ListItem button>
+					<ListItem button onClick={() => firebase.auth().signOut()}>
 						<ListItemIcon>
 							<ExitToAppIcon />
 						</ListItemIcon>
@@ -171,11 +172,11 @@ const NavigationDrawer = ({ children }) => {
 				</List>
 			</Drawer>
 			<ThemeProvider theme={theme}>
-				<div
+				<Container
 					className={clsx(classes.container, open && classes.containerShift)}
 				>
 					{children}
-				</div>
+				</Container>
 			</ThemeProvider>
 		</div>
 	);

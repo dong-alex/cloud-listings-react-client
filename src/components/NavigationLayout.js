@@ -62,11 +62,10 @@ const useStyles = makeStyles((theme) => ({
 		},
 	},
 	container: {
-		[theme.breakpoints.down(1725)]: {
+		[theme.breakpoints.down("lg")]: {
 			marginLeft: theme.spacing(9),
 		},
-		// marginRight: theme.spacing(0),
-		// marginBottom: theme.spacing(7),
+		marginBottom: theme.spacing(7),
 		width: "auto",
 		height: "100%",
 		transition: theme.transitions.create(["width", "margin"], {

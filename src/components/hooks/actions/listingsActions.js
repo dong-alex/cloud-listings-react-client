@@ -1,0 +1,7 @@
+const ListingActions = {
+	ADDED_LISTINGS: "ADDED_LISTINGS",
+	REMOVED_LISTINGS: "REMOVED_LISTINGS",
+	FETCHED_LISTINGS: "FETCHED_LISTINGS",
+};
+
+export default ListingActions;

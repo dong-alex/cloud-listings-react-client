@@ -17,7 +17,7 @@ import FormControl from "@material-ui/core/FormControl";
 import CircularProgress from "@material-ui/core/CircularProgress";
 import validateEmail from "../../utils/validateEmail";
 import validatePassword from "../../utils/validatePassword";
-import firebase from "../../auth/firebase";
+import { firebase } from "../../auth/firebase";
 import {
 	withFirebaseContext,
 	FirebaseContext,

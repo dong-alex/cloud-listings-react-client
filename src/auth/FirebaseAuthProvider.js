@@ -1,5 +1,5 @@
 import React, { useState, useEffect, createContext } from "react";
-import firebase from "./firebase";
+import {firebase} from "./firebase";
 import axios from "axios";
 
 axios.defaults.baseURL =
@@ -23,8 +23,25 @@ export const FirebaseAuthProvider = ({ children }) => {
 	// listener on the firebase
 	useEffect(() => {
 		const unsubscribe = firebase.auth().onAuthStateChanged((user) => {
-			setUser(user);
-			setLoadingAuthState(false);
+			if (user) {
+				setUser(user);
+				setLoadingAuthState(false);
+				user
+					.getIdToken()
+					.then((token) => {
+						axios.defaults.headers.common = {
+							Authorization: `Bearer ${token}`,
+						};
+					})
+					.catch((err) => {
+						console.log(err);
+						console.log("Error grabbing token from user");
+					});
+			} else {
+				console.log("No user currently signed");
+				setUser(null);
+				setLoadingAuthState(true);
+			}
 		});
 
 		return () => unsubscribe();

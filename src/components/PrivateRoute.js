@@ -8,17 +8,14 @@ const PrivateRoute = ({ component: RouteComponent, ...rest }) => {
 	useEffect(() => {
 		if (authenticated) {
 			console.log("You are now authenticated!");
+		} else {
+			console.log("You are not authenticated");
 		}
 	}, [authenticated]);
 
-	if (loadingAuthState) {
-		return (
-			<div>
-				<h1>Loading...</h1>
-			</div>
-		);
+	if (loadingAuthState && !authenticated) {
+		return <div>Loading...</div>;
 	}
-
 	return (
 		<Route
 			{...rest}

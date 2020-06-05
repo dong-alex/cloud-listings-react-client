@@ -6,6 +6,7 @@ import NavigationLayout from "../NavigationLayout";
 const useStyles = makeStyles((theme) => ({
 	header: {
 		textAlign: "center",
+		marginBottom: theme.spacing(4),
 	},
 }));
 

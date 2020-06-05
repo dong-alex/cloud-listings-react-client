@@ -10,6 +10,7 @@ import LoginPage from "./components/pages/LoginPage";
 import SignupPage from "./components/pages/SignupPage";
 import DashboardPage from "./components/pages/DashboardPage";
 import AccountPage from "./components/pages/AccountPage";
+import CssBaseline from "@material-ui/core/CssBaseline";
 import WatchlistPage from "./components/pages/WatchlistPage";
 import NotificationPage from "./components/pages/NotificationPage";
 
@@ -18,7 +19,6 @@ import { FirebaseContext } from "./auth/FirebaseAuthProvider";
 
 const useStyles = makeStyles((theme) => ({
 	root: {
-		margin: "0",
 		height: "100%",
 		width: "100%",
 	},
@@ -29,6 +29,7 @@ const App = (props) => {
 	const classes = useStyles();
 	return (
 		<div className={classes.root}>
+			<CssBaseline />
 			<Router>
 				<Switch>
 					<Route

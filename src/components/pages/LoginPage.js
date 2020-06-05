@@ -16,7 +16,7 @@ import EmailIcon from "@material-ui/icons/Email";
 import LockIcon from "@material-ui/icons/Lock";
 import FormControl from "@material-ui/core/FormControl";
 import CircularProgress from "@material-ui/core/CircularProgress";
-import firebase from "../../auth/firebase";
+import { firebase } from "../../auth/firebase";
 import { FirebaseContext } from "../../auth/FirebaseAuthProvider";
 
 const useStyles = makeStyles((theme) => ({

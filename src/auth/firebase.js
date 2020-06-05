@@ -4,6 +4,14 @@ import "firebase/firestore";
 import "firebase/auth";
 
 firebase.initializeApp(firebaseConfig);
-// firebase.firestore();
 
-export default firebase;
+let db = firebase.firestore();
+
+// if (window.location.hostname === "localhost") {
+// 	db.settings({
+// 		host: "localhost:5001",
+// 		ssl: false,
+// 	});
+// }
+
+export { db, firebase };

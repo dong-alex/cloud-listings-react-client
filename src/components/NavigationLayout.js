@@ -27,7 +27,7 @@ const useStyles = makeStyles((theme) => ({
 	root: {},
 	toolbarIcon: {
 		display: "none",
-		[theme.breakpoints.up("sm")]: {
+		[theme.breakpoints.up("md")]: {
 			backgroundColor: theme.palette.paper,
 			display: "flex",
 			alignItems: "center",
@@ -42,7 +42,7 @@ const useStyles = makeStyles((theme) => ({
 		minHeight: "100%",
 		width: theme.spacing(7),
 		overflowX: "hidden",
-		[theme.breakpoints.up("sm")]: {
+		[theme.breakpoints.up("md")]: {
 			width: drawerWidth,
 			transition: theme.transitions.create("width", {
 				easing: theme.transitions.easing.sharp,
@@ -57,26 +57,30 @@ const useStyles = makeStyles((theme) => ({
 			duration: theme.transitions.duration.leavingScreen,
 		}),
 		width: theme.spacing(7),
-		[theme.breakpoints.up("sm")]: {
+		[theme.breakpoints.up("md")]: {
 			width: theme.spacing(9),
 		},
 	},
 	container: {
-		marginLeft: theme.spacing(9),
-		marginRight: theme.spacing(0),
+		[theme.breakpoints.down(1725)]: {
+			marginLeft: theme.spacing(9),
+		},
+		// marginRight: theme.spacing(0),
+		// marginBottom: theme.spacing(7),
 		width: "auto",
-		height: "auto",
+		height: "100%",
 		transition: theme.transitions.create(["width", "margin"], {
 			easing: theme.transitions.easing.sharp,
 			duration: theme.transitions.duration.leavingScreen,
 		}),
-		[theme.breakpoints.up("sm")]: {},
 	},
 	containerShift: {
 		marginLeft: (props) => (props.open ? theme.spacing(9) : drawerWidth),
-		[theme.breakpoints.up("sm")]: {
-			width: `calc(100% - ${drawerWidth}px)`,
+		[theme.breakpoints.up("md")]: {
 			marginLeft: (props) => (props.open ? drawerWidth : theme.spacing(9)),
+		},
+		[theme.breakpoints.down("md")]: {
+			width: (props) => props.open && `calc(100% - ${drawerWidth}px)`,
 		},
 	},
 	bottomList: {

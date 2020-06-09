@@ -48,58 +48,30 @@ const tableIcons = {
 };
 
 const WatchlistTable = (props) => {
-	const { watchlist, onDeleteWatchlistItem, onEditWatchlistItem } = props;
-	const [openEdit, setOpenEdit] = useState(false);
+	const { watchlist, onDeleteWatchlistItem } = props;
 	const [openDelete, setOpenDelete] = useState(false);
-	const [selectedItem, setSelectedItem] = useState(null);
+	const [selectedItemId, setSelectedItemId] = useState("");
 	const [loading, setLoading] = useState(false);
-	const [fieldState, setFieldState] = useState({ tagName: "", url: "" });
 
 	const columns = [
 		{ title: "Tag Name", field: "tagName" },
 		{ title: "Watchlist Url", field: "url" },
 	];
 
-	useEffect(() => {
-		if (selectedItem) {
-			setFieldState({ ...selectedItem });
-		} else {
-			setFieldState({ tagName: "", url: "" });
-		}
-	}, [selectedItem]);
-
 	const handleDelete = (event, rowData) => {
-		setSelectedItem(rowData);
+		const { id } = rowData;
+		setSelectedItemId(id);
 		setOpenDelete(true);
 	};
 
-	const handleEdit = (event, rowData) => {
-		setSelectedItem(rowData);
-		setOpenEdit(true);
-	};
-
-	const handleEditClose = () => {
-		setSelectedItem(null);
-		setOpenEdit(false);
-	};
-
 	const handleDeleteClose = () => {
-		setSelectedItem(null);
+		setSelectedItemId("");
 		setOpenDelete(false);
 	};
 
-	const handleChange = (event) => {
-		setFieldState({
-			[event.target.name]: event.target.value,
-		});
-	};
-
-	const handleEditConfirm = () => {
-		console.log("Sending to API", fieldState);
-	};
-
 	const handleDeleteConfirm = () => {
-		console.log("Sending to API");
+		onDeleteWatchlistItem(selectedItemId);
+		setOpenDelete(false);
 	};
 
 	return (
@@ -117,65 +89,10 @@ const WatchlistTable = (props) => {
 							handleDelete(event, rowData);
 						},
 					},
-					{
-						icon: tableIcons.Edit,
-						tooltip: "Edit item",
-						onClick: (event, rowData) => {
-							handleEdit(event, rowData);
-						},
-					},
 				]}
 			/>
-			<Dialog
-				open={openEdit}
-				onClose={handleEditClose}
-				aria-labelledby='form-dialog-title'
-			>
-				<DialogTitle id='form-dialog-title'>Edit</DialogTitle>
-				<DialogContent>
-					<DialogContentText>
-						Edit your watchlist item here. This will update all of your current
-						listings associated to this item.
-					</DialogContentText>
-					<TextField
-						autoFocus
-						margin='dense'
-						id='tagName'
-						name='tagName'
-						value={fieldState.tagName}
-						onChange={handleChange}
-						label='Tag Name'
-						fullWidth
-					/>
-					<TextField
-						autoFocus
-						margin='dense'
-						id='url'
-						name='url'
-						value={fieldState.url}
-						onChange={handleChange}
-						label='Watchlist Url'
-						fullWidth
-					/>
-				</DialogContent>
-				<DialogActions>
-					<Button onClick={handleEditClose} color='primary'>
-						Cancel
-					</Button>
-					<Button onClick={handleEditConfirm} color='primary'>
-						Save
-					</Button>
-				</DialogActions>
-			</Dialog>
-			<Dialog
-				open={openDelete}
-				onClose={handleDeleteClose}
-				aria-labelledby='alert-dialog-title'
-				aria-describedby='alert-dialog-description'
-			>
-				<DialogTitle id='alert-dialog-title'>
-					{"Delete watchlist item?"}
-				</DialogTitle>
+			<Dialog open={openDelete} onClose={handleDeleteClose}>
+				<DialogTitle>Delete watchlist item?</DialogTitle>
 				<DialogContent>
 					<DialogContentText id='alert-dialog-description'>
 						Are you sure you want to delete this watchlist item? All listings

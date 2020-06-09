@@ -1,4 +1,4 @@
-import React, { useState, useContext, useEffect, useReducer } from "react";
+import { useEffect, useReducer } from "react";
 import {
 	watchlistReducer,
 	WATCHLIST_INITIAL_STATE,
@@ -6,16 +6,14 @@ import {
 import WatchlistActions from "./actions/watchlistActions";
 import { db, firebase } from "../../auth/firebase";
 
-import axios from "axios";
-
 const useWatchlist = (props) => {
 	const [state, dispatch] = useReducer(
 		watchlistReducer,
 		WATCHLIST_INITIAL_STATE
 	);
 
-	// destructure state
-	const { watchlist } = state;
+	// destructure state - loading only really used during initial load or heavy loads
+	const { watchlist, loading } = state;
 
 	// initial fetch for listngs
 	useEffect(() => {
@@ -25,7 +23,7 @@ const useWatchlist = (props) => {
 			.where("userId", "==", firebase.auth().currentUser.uid)
 			.onSnapshot((querySnapshot) => {
 				let data = [];
-
+				console.log(`read ${querySnapshot.docs.length} docs`);
 				querySnapshot.forEach((doc) => {
 					data.push({
 						id: doc.id,
@@ -37,6 +35,7 @@ const useWatchlist = (props) => {
 					payload: data,
 				});
 			});
+
 		return () => unsubscribe();
 	}, []);
 
@@ -64,15 +63,16 @@ const useWatchlist = (props) => {
 		return result.id;
 	};
 
-	const handleDeleteWatchlistItem = (selectedItems) => {};
-
-	const handleEditWatchlistItem = () => {};
+	const handleDeleteWatchlistItem = async (watchlistId) => {
+		await db.collection("watchlist").doc(watchlistId).delete();
+		console.log("Delete all the other listings assocaited with the watchlist");
+	};
 
 	return {
 		watchlist,
+		loading,
 		onAddWatchlistItem: handleAddWatchlistItem,
 		onDeleteWatchlistItem: handleDeleteWatchlistItem,
-		onEditWatchlistItem: handleEditWatchlistItem,
 	};
 };
 

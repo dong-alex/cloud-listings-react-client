@@ -1,12 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { makeStyles } from "@material-ui/core/styles";
-import ExpansionPanel from "@material-ui/core/ExpansionPanel";
-import ExpansionPanelSummary from "@material-ui/core/ExpansionPanelSummary";
-import ExpansionPanelDetails from "@material-ui/core/ExpansionPanelDetails";
 import Button from "@material-ui/core/Button";
 import Typography from "@material-ui/core/Typography";
-import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
-import Grid from "@material-ui/core/Grid";
 import CircularProgress from "@material-ui/core/CircularProgress";
 import TextField from "@material-ui/core/TextField";
 import CloseIcon from "@material-ui/icons/Close";
@@ -14,7 +9,6 @@ import IconButton from "@material-ui/core/IconButton";
 import Divider from "@material-ui/core/Divider";
 import useWatchlist from "../hooks/useWatchlist";
 import NavigationLayout from "../NavigationLayout";
-import Snackbar from "@material-ui/core/Snackbar";
 import MuiAlert from "@material-ui/lab/Alert";
 import WatchlistTable from "../WatchlistTable";
 
@@ -25,6 +19,7 @@ const Alert = (props) => {
 const useStyles = makeStyles((theme) => ({
 	header: {
 		textAlign: "center",
+		marginBottom: theme.spacing(4),
 	},
 	heading: {
 		fontSize: theme.typography.pxToRem(15),
@@ -34,7 +29,6 @@ const useStyles = makeStyles((theme) => ({
 		marginTop: theme.spacing(2),
 	},
 	divider: {
-		marginTop: theme.spacing(4),
 		marginBottom: theme.spacing(4),
 	},
 	addWatchlistPanel: {
@@ -56,7 +50,6 @@ const WatchlistPage = (props) => {
 		watchlist,
 		onAddWatchlistItem,
 		onDeleteWatchlistItem,
-		onEditWatchlistItem,
 	} = useWatchlist();
 	const [loading, setLoading] = useState(false);
 	const [successMessage, setSuccessMessage] = useState("");
@@ -99,7 +92,7 @@ const WatchlistPage = (props) => {
 				Watchlist
 			</Typography>
 			<Divider variant='middle' className={classes.divider} />
-			<Typography variant='h5' component='h6' className={classes.subheader}>
+			<Typography variant='h5' component='h6'>
 				Add to Watchlist
 			</Typography>
 			{errorMessage && (
@@ -173,7 +166,6 @@ const WatchlistPage = (props) => {
 			<WatchlistTable
 				watchlist={watchlist}
 				onDeleteWatchlistItem={onDeleteWatchlistItem}
-				onEditWatchlistItem={onEditWatchlistItem}
 			/>
 		</NavigationLayout>
 	);
